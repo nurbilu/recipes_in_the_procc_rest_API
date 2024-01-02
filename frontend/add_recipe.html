@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Recipe</title>
+</head>
+<body>
+
+<h1>Add Recipe</h1>
+
+<form id="add-recipe-form">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+    <br>
+
+    <label for="ingredients">Ingredients:</label>
+    <textarea id="ingredients" name="ingredients" required></textarea>
+    <br>
+
+    <label for="cooking-time">Cooking Time:</label>
+    <input type="text" id="cooking-time" name="cooking-time" required>
+    <br>
+
+    <button type="button" onclick="addRecipe()">Add Recipe</button>
+</form>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    const SERVER = 'http://localhost:9000/';
+    function addRecipe() {
+        const form = document.getElementById('add-recipe-form');
+        const formData = new FormData(form);
+
+        axios.post(`${SERVER}add_recipe`, {
+            name: formData.get('name'),
+            ingredients: formData.get('ingredients'),
+            cooking_time: formData.get('cooking-time')
+        })
+        .then(response => {
+            alert(response.data.message);
+            // Redirect or update the UI as needed
+        })
+        .catch(error => console.error('Error adding recipe:', error));
+    }
+</script>
+
+</body>
+</html>

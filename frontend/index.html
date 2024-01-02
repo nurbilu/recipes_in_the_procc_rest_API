@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe List</title>
+</head>
+<body>
+
+<h1>Recipe List</h1>
+
+<ul id="recipe-list"></ul>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    const SERVER = 'http://localhost:9000';
+    // Fetch and display recipes when the page loads
+    axios.get(`${SERVER}/recipes`)
+        .then(response => {
+            const recipes = response.data.recipes;
+            const recipeList = document.getElementById('recipe-list');
+
+            recipes.forEach(recipe => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${recipe_name} - ${recipe_cooking_time}`;
+                recipeList.appendChild(listItem);
+            });
+        })
+        .catch(error => console.error('Error fetching recipes:', error));
+</script>
+
+</body>
+</html>
